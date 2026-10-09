@@ -1,0 +1,42 @@
+
+[A] start-up, ramps, hard acceleration, timer wrap-around
+  RPM error, steady            n=9889    mean= -0.0001 sd= 0.0360 p99= 0.0901 max= 0.4143 %
+  RPM error, transient >=800   n=5168    mean= -0.0485 sd= 0.1635 p99= 0.4107 max= 0.5268 %
+  RPM error, run-up <800       n=482     mean= -1.1386 sd= 1.0082 p99= 4.8958 max= 5.1485 %
+  event timing, steady         n=680     mean= -0.0004 sd= 0.0144 p99= 0.0360 max= 0.0504 deg
+  event timing, transient      n=391     mean= +0.0087 sd= 0.0380 p99= 0.1217 max= 0.4252 deg
+  sync acquired after 1.66 crank revolutions of signal
+  events scheduled: 1071  (>1 deg: 0, >2 deg: 0)
+  sync losses: 0, cam faults: 0, stalls: 0
+  PASS  sync acquired within 3.2 revs (1.66)
+  PASS  steady RPM error < 0.5% (max 0.414%)
+  PASS  transient RPM error (>=800 rpm, up to 2000 rpm/s) < 1% (max 0.527%)
+  PASS  run-up RPM lag (200->800 rpm in 1 s) < 6% (max 5.148%)
+  PASS  steady event timing < 0.5 deg (max 0.050)
+  PASS  transient event timing < 1.5 deg (max 0.425)
+  PASS  no event off by more than 2 deg (0)
+  PASS  no spurious sync loss in clean run (0)
+  PASS  event volume plausible (1071)
+
+[B] fault injection at 1500 rpm
+  event timing, all            n=662     mean= -0.0010 sd= 0.0139 p99= 0.0360 max= 0.0360 deg
+  glitches rejected: 3, dropouts: 1, sync losses: 2, cam faults: 4, stalls: 1
+  resync 1: lost at 1.001 s, back at 1.066 s (1.6 revs after fault cleared)
+  resync 2: lost at 4.066 s, back at 4.226 s (0.7 revs after fault cleared)
+  resync 3: lost at 5.700 s, back at 6.066 s (1.7 revs after fault cleared)
+  events scheduled: 662  (>1 deg: 0, >2 deg: 0)
+  PASS  dropped tooth detected (1)
+  PASS  short glitch rejected by filter (3)
+  PASS  stuck cam signal detected (4)
+  PASS  signal loss detected as stall (1)
+  PASS  every fault re-acquired within 4.5 revs, final state SYNCED
+  PASS  no event fired >2 deg off during/after faults (0)
+
+[C] over-speed gating (limit 3200 rpm, hysteresis 200)
+  outputs enabled while true speed > limit+150: 0 edges
+  sync losses during over-speed: 0
+  PASS  outputs gated off whenever speed exceeds limit
+  PASS  decoder stays synced through 3400 rpm
+  PASS  events stay accurate up to limit (0 >2 deg)
+
+18 checks, 0 failed
